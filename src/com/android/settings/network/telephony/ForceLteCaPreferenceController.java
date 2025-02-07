@@ -16,6 +16,8 @@ import com.android.internal.telephony.util.ArrayUtils;
 import com.android.settingslib.core.lifecycle.LifecycleObserver;
 import com.android.settingslib.core.lifecycle.events.OnStart;
 import com.android.settingslib.core.lifecycle.events.OnStop;
+import com.android.settings.R;
+
 /**
  * Preference controller for "Force LTE_CA" hack
  */
@@ -57,6 +59,10 @@ public class ForceLteCaPreferenceController extends TelephonyTogglePreferenceCon
     }
     @Override
     public int getAvailabilityStatus(int subId) {
+
+        if (!mContext.getResources().getBoolean(R.bool.config_showForceLteCaToggle))
+            return UNSUPPORTED_ON_DEVICE;
+
         init(subId);
         if (SubscriptionManager.isValidSubscriptionId(mSubId)) {
             return AVAILABLE;
